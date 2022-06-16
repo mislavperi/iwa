@@ -1,8 +1,6 @@
 <?php 
     include("header.php");
     $curr = establishDbConnection();
-    var_dump($curr);
-    die();
     $error = "";
     if(isset($_POST["submit"])) {
         $_CHECK_IF_USERNAME_PASSWORD_SET = isset($_POST["username"]) && isset($_POST["password"]);
@@ -28,6 +26,7 @@
 
     if (isset($_GET["signout"])) {
         session_destroy();
+        header("location:index.php");
     }
 ?>
 <body>
