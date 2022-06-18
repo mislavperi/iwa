@@ -72,8 +72,7 @@ else {
         ?>
     </p>
     <div>
-        <input type="hidden" name="id" value=<?php if (empty($id)) echo 0;
-                                                else echo $id; ?>>
+        <input type="hidden" name="id" value=<?php if (empty($id)) echo 0; else echo $id; ?>>
     </div>
     <div>
         <p><?php if ($error) echo $error;
@@ -81,13 +80,11 @@ else {
     </div>
     <div>
         <label for="title">Naziv slike:</label>
-        <input type="text" name="title" id="title" value=<?php if ($title) echo $title;
-                                                            else echo $_POST["title"]; ?>>
+        <input type="text" name="title" id="title" value=<?php if ($title) echo $title; else echo $_POST["title"]; ?>>
     </div>
     <div>
         <label for="url">Link slike:</label>
-        <input type="url" name="url" id="url" value=<?php if ($url) echo $url;
-                                                    else echo $_POST["url"]; ?>>
+        <input type="url" name="url" id="url" value=<?php if ($url) echo $url; else echo $_POST["url"]; ?>>
     </div>
     <div>
         <label for="date">Datum i vrijeme slikanja:</label>

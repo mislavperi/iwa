@@ -32,11 +32,11 @@
             </tr>";
         }?>
     </tbody>
-</table> <br>
+</table> <br />
 <?php 
      $query = "SELECT k.ime AS ime, k.prezime AS prezime, COUNT(*) AS broj_slika FROM korisnik k, slika s WHERE status=0 AND k.korisnik_id=s.korisnik_id GROUP BY k.korisnik_id ORDER BY k.prezime";
      $result = executeQuery($curr, $query);
-?> <br>
+?> <br />
 <table border>
     <caption>Statistika privatnih slika korisnika</caption>
     <thead>

@@ -14,7 +14,7 @@
     }
 
     function executeQuery($curr, $query) {
-        $response = $curr->query($query);
+        $response = $curr -> query($query);
         if ($response) {
             return $response;
         }

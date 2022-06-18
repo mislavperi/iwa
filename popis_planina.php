@@ -3,8 +3,8 @@ require_once("header.php");
 require_once("menu.php");
 $curr = establishDbConnection();
 
-if (isset($_SESSION['active_user_id'])) {
-    if ($_SESSION['active_user_type'] == '0') { ?>
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['user_type'] == '0') { ?>
         <button onclick="window.location = 'dodaj_planinu.php'">
             Dodaj novu planinu
         </button>
@@ -12,7 +12,7 @@ if (isset($_SESSION['active_user_id'])) {
             Dodavanje moderatora
         </button>
 <?php }
-    if ($_SESSION['active_user_type'] == '2') {
+    if ($_SESSION['user_type'] == '2') {
         header("location:index.php");
         exit();
     }
@@ -23,7 +23,7 @@ if (isset($_SESSION['active_user_id'])) {
 ?>
 <div class="mountain-wrapper">
     <?php
-    if (isset($_SESSION['active_user_id'])) {
+    if (isset($_SESSION['user_id'])) {
         if ($_SESSION['active_user_type'] == '0') {
             echo "Sve planine:";
         } else {
@@ -33,8 +33,8 @@ if (isset($_SESSION['active_user_id'])) {
     ?>
     <?php
     $query = "SELECT planina.planina_id, planina.naziv, planina.opis, planina.lokacija, planina.geografska_sirina, planina.geografska_duzina FROM planina LEFT JOIN moderator ON planina.planina_id=moderator.planina_id WHERE moderator.korisnik_id={$_SESSION['active_user_id']}";
-    if (isset($_SESSION['active_user_id'])) {
-        if ($_SESSION['active_user_type'] == '0') {
+    if (isset($_SESSION['user_id'])) {
+        if ($_SESSION['user_type'] == '0') {
             $query = "SELECT planina.planina_id, planina.naziv, planina.opis, planina.lokacija, planina.geografska_sirina, planina.geografska_duzina FROM planina LEFT JOIN moderator ON planina.planina_id=moderator.planina_id";
         }
     }

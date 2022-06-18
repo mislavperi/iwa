@@ -16,7 +16,8 @@ if (isset($_SESSION["user_id"])) {
             <button onclick="window.location = 'galerija.php?userid=<?= $_GET['userid'] ?>&surname=<?= $_GET['surname'] ?>&blocked=1'">
                 Blokiraj korisnika
             </button>
-        <?php } else { ?>
+        <?php } 
+        else { ?>
             <button onclick="window.location = 'dodaj_sliku.php'">
                 Dodaj novi sliku
             </button>
@@ -41,7 +42,7 @@ if (isset($_GET["blocked"])) {
 <div class="description">
     <h4>Način korištenja filtera</h4>
     <p>Ukoliko pretražujete po datumu, unesite datum u sljdećem formatu DD.MM.YYYY. (Dan, mjesec, godina)
-        <br>
+        <br />
         Ukoliko pretražujtete koristeći slova, unesite slovo ili naziv planine.
     </p>
 </div>
@@ -66,7 +67,7 @@ if (isset($_GET["blocked"])) {
     </table>
 </form>
 <?php
-$query = "SELECT slika.slika_id, slika.korisnik_id, planina.naziv, korisnik.ime, korisnik.prezime, slika.datum_vrijeme_slikanja, slika.url, planina.opis FROM planina, korisnik, slika WHERE planina.planina_id=slika.planina_id AND korisnik.korisnik_id=slika.korisnik_id AND slika.status=1";
+$query = "SELECT slika.slika_id, slika.korisnik_id, planina.planina_id, planina.naziv, korisnik.ime, korisnik.prezime, slika.datum_vrijeme_slikanja, slika.url, planina.opis FROM planina, korisnik, slika WHERE planina.planina_id=slika.planina_id AND korisnik.korisnik_id=slika.korisnik_id AND slika.status=1";
 if (!isset($_GET['reset'])) {
     if (isset($_GET['mountain'])) {
         $mountain = mysqli_real_escape_string($curr, $_GET['mountain']);
@@ -86,6 +87,10 @@ if (!isset($_GET['reset'])) {
     if (isset($_GET['surname'])) {
         $surname = mysqli_real_escape_string($curr, $_GET['surname']);
         $query = $query . " AND (korisnik.prezime like '%$surname%')";
+    }
+    if (isset($_GET["mountainid"])) {
+        $mountainid = mysqli_real_escape_string($curr, $_GET['mountainid']);
+        $query = $query . " AND (planina.planina_id) like '%$mountainid%'";
     }
 }
 $query = $query . " ORDER BY datum_vrijeme_slikanja ASC ";
@@ -112,6 +117,9 @@ $result = executeQuery($curr, $query);
             <button
                 onclick="window.location = 'galerija.php?userid=<?= $mountain['korisnik_id'] ?>&surname=<?= $mountain['prezime'] ?>'"
             >Filtriraj po korisniku</button>
+            <button
+                onclick="window.location = 'galerija.php?mountainid=<?= $mountain['planina_id'] ?>'"
+            >Filtriraj po planini</button>
         </div>
         <div>
             <p class="title-paragraph">Planina</p>

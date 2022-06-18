@@ -24,30 +24,39 @@ if (isset($_POST['submit'])) {
         $name = $_POST['name'];
         $surname = $_POST['surname'];
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $passwordu = $_POST['loz'];
         $email = $_POST['email'];
         $type = $_POST['utype'];
         $blocked = $_POST['blokiran'];
         $image = $_POST['slika'];
         if ($id == 0) {
-            $query = "INSERT INTO korisnik (tip_korisnika_id, korisnicko_ime, lozinka, ime, prezime, email, blokiran, slika) VALUES ('$type', '$username', '$password', '$name', '$surname', '$email', '0', '$image');";
+            $query = "INSERT INTO korisnik (tip_korisnika_id, korisnicko_ime, lozinka, ime, prezime, email, blokiran, slika) VALUES ('$type', '$username', '$passwordu', '$name', '$surname', '$email', '0', '$image');";
         } else {
-            $query = "UPDATE korisnik SET tip_korisnika_id = '$type', korisnicko_ime = '$username', lozinka = '$password', ime = '$name', prezime = '$surname' email = '$email', blokiran = '$blocked', slika = '$image' WHERE korisnik_id = '$id'";
+            $query = "UPDATE korisnik SET
+            tip_korisnika_id = '$type',
+            korisnicko_ime = '$username',
+            lozinka = '$passwordu',
+            ime = '$name',
+            prezime = '$surname',
+            email = '$email',
+            blokiran = '$blocked',
+            slika = '$image' WHERE korisnik_id='$id'
+            ";
         }
         executeQuery($curr, $query);
-        header("Location: korisnici.php");
+        header("location: korisnici.php");
     }
 }
 if (isset($_GET['user'])) {
     $id = $_GET['user'];
-    $query = "SELECT tip_korisnika_id, korisnicko_ime, lozinka, ime, prezime, email, blokiran, slika FROM korisnik WHERE korisnik_id='$id'";
+    $query = "SELECT tip_korisnika_id, korisnicko_ime, lozinka, ime, prezime, email, blokiran, slika FROM korisnik WHERE korisnik_id = '$id'";
     $result = executeQuery($curr, $query);
-    list($type, $username, $password, $name, $surname, $email, $blocked, $image) = mysqli_fetch_array($result);
+    list($type, $username, $passwordu, $name, $surname, $email, $blocked, $image) = mysqli_fetch_array($result);
 } else {
     $name = "";
     $surname = "";
     $username = "";
-    $password = "";
+    $passwordu = "";
     $email = "";
     $type = "";
     $blocked = "";
@@ -69,8 +78,7 @@ if (isset($_POST['delete'])) {
         else echo "Dodaj korisnika";
         ?></p>
     <div>
-        <input type="hidden" name="novi" value="<?php if (!empty($id)) echo $id;
-                                                else echo 0; ?>" />
+        <input type="hidden" name="novi" value="<?php if (!empty($id)) echo $id; else echo 0; ?>" />
     </div>
     <div>
         <p><?php if ($error) echo $error;
@@ -78,28 +86,23 @@ if (isset($_POST['delete'])) {
     </div>
     <div>
         <label for="name">Ime:</label>
-        <input type="text" name="name" id="name" value="<?php if (!isset($_POST['name'])) echo $name;
-                                                        else echo $_POST['name']; ?>" />
+        <input type="text" name="name" id="name" value="<?php if (!isset($_POST['name'])) echo $name; else echo $_POST['name']; ?>" />
     </div>
     <div>
         <label for="surname">Prezime:</label>
-        <input type="text" name="surname" id="surname" value="<?php if (!isset($_POST['surname'])) echo $surname;
-                                                                else echo $_POST['surname']; ?>" />
+        <input type="text" name="surname" id="surname" value="<?php if (!isset($_POST['surname'])) echo $surname; else echo $_POST['surname']; ?>" />
     </div>
     <div>
         <label for="username">Korisničko ime:</label>
-        <input type="text" name="username" id="username" value="<?php if (!isset($_POST['username'])) echo $username;
-                                                                else echo $_POST['username']; ?>" />
+        <input type="text" name="username" id="username" value="<?php if (!isset($_POST['username'])) echo $username; else echo $_POST['username']; ?>" />
     </div>
     <div>
-        <label for="password">Lozinka:</label>
-        <input type="password" name="password" id="password" value="<?php if (!isset($_POST['password'])) echo $password;
-                                                                    else echo $_POST['password']; ?>" />
+        <label for="loz">Lozinka:</label>
+        <input type="password" name="loz" id="loz" value="<?php if (!isset($_POST['loz'])) echo $passwordu; else echo $_POST['loz']; ?>" />
     </div>
     <div>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?php if (!isset($_POST['email'])) echo $email;
-                                                            else echo $_POST['email']; ?>" />
+        <input type="email" name="email" id="email" value="<?php if (!isset($_POST['email'])) echo $email; else echo $_POST['email']; ?>" />
     </div>
     <div>Tip korisnika:
         <select name="utype" id="utype">
